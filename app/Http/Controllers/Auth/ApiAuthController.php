@@ -17,8 +17,16 @@ class ApiAuthController extends Controller
     public function register (registerRequest $request) {
         $request['password']=Hash::make($request['password']);
         $request['remember_token'] = Str::random(10);
-        $user = User::create($request->toArray());
+        // $user = User::create($request->toArray());
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request['password'])
+        ]);
+       
+        $token = $user->createToken('LaravelAuthApp')->accessToken;
         $token = $user->createToken('Laravel Password Grant Client')->accessToken;
+        $user->save();
         $response = ['token' => $token];
         return response()->json(['data'=>$response], 200);
     }
@@ -30,6 +38,7 @@ class ApiAuthController extends Controller
         if ($user) {
             if (Hash::check($request->password, $user->password)) {
                 $token = $user->createToken('Laravel Password Grant Client')->accessToken;
+                $user->save();
                 $response = ['token' => $token];
                 return response()->json(['data'=>$response], 200);
             } else {

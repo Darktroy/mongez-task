@@ -16,14 +16,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/login', [ApiAuthController::class,'login'])->name('login.api');
-Route::post('/register', [ApiAuthController::class,'register'])->name('register.api');
+Route::post('/login', [ApiAuthController::class,'login']);
+Route::post('/register', [ApiAuthController::class,'register']);
 
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
+Route::post('/list-worker-for-5-km',[OrderAndWorkerController::class,'allWorkerNear']);
+
 Route::middleware('auth:api')->group(function () {
-    // our routes to be protected will go in here
-    Route::post('/logout',[ApiAuthController::class,'logout'])->name('logout.api');
-    Route::post('/list-worker-for-5-km',[OrderAndWorkerController::class,'allWorkerNear'])->name('logout.api');
+    Route::post('/logout',[ApiAuthController::class,'logout']);
 });
