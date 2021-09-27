@@ -7,6 +7,8 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Order;
 use App\Models\Worker;
+use Faker\Factory as Faker;
+use Faker\Factory;
 
 class users_worker_order extends Seeder
 {
@@ -18,6 +20,7 @@ class users_worker_order extends Seeder
     public function run()
     {
         $i = 0;
+        $faker = Faker::create();
         for ($i=0; $i < 1000 ; $i++) { 
 
             $user = new User();
@@ -39,6 +42,7 @@ class users_worker_order extends Seeder
                 $order->user_id = $user->id;
                 $order->latitude = 29.88501541157709; 
                 $order->longitude = 30.915834195956933;
+                $order->description = $faker->paragraph;
                 $order->save();
             }
 

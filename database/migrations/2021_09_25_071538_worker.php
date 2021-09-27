@@ -17,7 +17,7 @@ class Worker extends Migration
             $table->id();
             $table->float('latitude',16,12);
             $table->float('longitude',16,12);
-            $table->enum('status', ['shapping', 'on_my_way','busy','in_meeting']);
+            $table->enum('status', ['shapping', 'on_my_way','busy','in_meeting','free']);
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
 

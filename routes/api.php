@@ -19,8 +19,13 @@ use Illuminate\Support\Facades\Route;
 Route::post('/login', [ApiAuthController::class,'login']);
 Route::post('/register', [ApiAuthController::class,'register']);
 
-Route::post('/list-worker-for-5-km',[OrderAndWorkerController::class,'allWorkerNear']);
 
 Route::middleware('auth:api')->group(function () {
+    
+    Route::post('/list-worker-for-5-km',[OrderAndWorkerController::class,'allWorkerNear']);
+    Route::post('/make-order',[OrderAndWorkerController::class,'makeOrder']);
+    Route::post('/send-order-to-worker',[OrderAndWorkerController::class,'sendOrder']);
+    Route::post('/worker-accept-or-refuse-order',[OrderAndWorkerController::class,'workerAcceptRefuseOrder']);
+
     Route::post('/logout',[ApiAuthController::class,'logout']);
 });

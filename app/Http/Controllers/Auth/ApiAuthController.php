@@ -7,6 +7,7 @@ use App\Http\Requests\loginRequest;
 use App\Http\Requests\registerRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -33,19 +34,12 @@ class ApiAuthController extends Controller
 
 
     public function login (loginRequest $request) {
-        
-        $user = User::where('email', $request->email)->first();
-        if ($user) {
-            if (Hash::check($request->password, $user->password)) {
-                $token = $user->createToken('Laravel Password Grant Client')->accessToken;
-                $user->save();
-                $response = ['token' => $token];
-                return response()->json(['data'=>$response], 200);
-            } else {
-                $response = ["message" => "Password mismatch"];
-                return response($response, 422);
-            }
-        } else {
+        if(Auth::attempt(['email'=> $request->email,'password'=> $request->password])){
+            $user = Auth::user();
+            $token = $user->createToken('Laravel Password Grant Client')->accessToken;
+            $response = ['token' => $token];
+            return response()->json(['data'=>$response], 200);
+        }else {
             $response = ["message" =>'User does not exist'];
             return response($response, 422);
         }
