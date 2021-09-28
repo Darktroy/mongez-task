@@ -38,7 +38,6 @@ class Order extends Model
 
     public function sendOrder(){
         $intiated_orders = self::where('status','intiate')->get()->all();
-        dd($intiated_orders);
         foreach ($intiated_orders as $key => $value) {
             // array:9 [
             //     "id" => 668

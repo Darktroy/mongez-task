@@ -29,7 +29,16 @@ class workerRepo
     }
 
     public function acceptOrder($order_id,$user_id){
-        Order::where('id',$order_id)->where('status','intiate')->update(['worker_id'=>$user_id,'status'=>'start']);
-        order_status::where('id',$order_id)->update(['worker_id'=>$user_id,'status'=>'start']);
+        Order::where('id',$order_id)->where('status','intiate')->update(['worker_id'=>$user_id,'status'=>'shapping']);
+        order_status::where('id',$order_id)->update(['worker_id'=>$user_id,'status'=>'shapping']);
+    }
+
+    public function resendOrders(){
+        $worker = new Worker();
+        $unAcceptedOrdersList = Order::where('status','intiate')->get()->toArray();
+        foreach ($unAcceptedOrdersList as $key => $value) {
+            $data = $worker->getNears($value);
+            //send it to nearest available worker
+        }
     }
 }

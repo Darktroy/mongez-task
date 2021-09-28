@@ -39,5 +39,15 @@ class OrderAndWorkerController extends Controller
             return response()->json(['error'=>'This worker can not accept',200]);
         }
 
+        $worker = new Worker();
+        $data = $worker->getNears($request);
+    }
+
+    public function reSendUnaaccepptableOrder(){
+        $worker = new Worker();
+        $unAcceptedOrdersList = Order::where('status','intiate')->get()->toArray();
+        foreach ($unAcceptedOrdersList as $key => $value) {
+            $data = $worker->getNears($value);
+        }
     }
 }

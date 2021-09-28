@@ -42,6 +42,7 @@ class users_worker_order extends Seeder
                 $order->user_id = $user->id;
                 $order->latitude = 29.88501541157709; 
                 $order->longitude = 30.915834195956933;
+                $order->status = 'intiate';
                 $order->description = $faker->paragraph;
                 $order->save();
             }

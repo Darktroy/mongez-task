@@ -16,6 +16,8 @@ class Worker extends Model
         // dd(DB::select('SHOW VARIABLES LIKE "%ST_DISTANCE_SPHERE%"'));
 
 
+        // 'latitude'=>'required|numeric',
+        // 'longitude'=>'required|numeric',
         $quey ='select *, ST_Distance_Sphere( point ('.$data->longitude.', '.$data->latitude.'), 
                 point(longitude, latitude)) * .001  as `distance_in_kms` from `workers`
                 having `distance_in_kms` <= 5 order by `distance_in_kms` asc';
